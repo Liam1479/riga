@@ -531,7 +531,7 @@ let last=performance.now(),T=+QS.get('t')||0,acc=0,frames=0,fps=60,slow=0,spd=0;
 gl.enable(gl.DEPTH_TEST);gl.depthFunc(gl.LEQUAL);
 function frame(now){
   requestAnimationFrame(frame);
-  const dt=Math.min(.05,(now-last)/1000);last=now;T+=dt;acc+=dt;frames++;
+  const dt=Math.max(0,Math.min(.05,(now-last)/1000));last=now;T+=dt;acc+=dt;frames++;
   envStep(1-Math.exp(-dt*1.6));sunN=nrm(env.sun);
   if(acc>.5){fps=frames/acc;if(fps<28&&rs>.45){if(++slow>1){rs*=.82;slow=0}}else slow=0;acc=0;frames=0;
     const hd=((cam.yaw*57.2958)%360+360)%360;
